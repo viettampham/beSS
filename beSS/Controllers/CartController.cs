@@ -36,5 +36,11 @@ namespace beSS.Controllers
             var newCart = _cartService.CreateCart(id);
             return Ok(newCart);
         }
+
+        [HttpDelete("delete-cart")]
+        public IActionResult DeleteCart(Guid id)
+        {
+            return Ok(_cartService.DeleteCart(id));
+        }
     }
 }

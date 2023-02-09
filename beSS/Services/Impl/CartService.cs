@@ -102,13 +102,30 @@ namespace beSS.Services.Impl
                 }).ToList();*/
             var listCart = _context.Carts
                 .Include(c=>c.Orders)
-                
-                .Select(c => c).ToList();
+                .Select(c => new Cart()
+                {
+                    CartID = c.CartID,
+                    UserID = c.UserID,
+                    Orders = _context.Orders
+                        .Include(o=>o.Product)
+                        .Where(o=>o.UserID == c.UserID)
+                        .Select(o=>o).ToList(),
+                    TotalMoneyCart = c.TotalMoneyCart
+                }).ToList();
             return listCart;
         }
 
         public MessageResponse CreateCart(Guid id)
         {
+            var checkUser = _context.Users.FirstOrDefault(u => u.Id == id);
+            if (checkUser == null)
+            {
+                return  new MessageResponse()
+                {
+                    Status = 404,
+                    Message = "User không tồn tại"
+                };
+            }
             var ListOrder = _context.Orders
                 .Select(o => o).ToList();
             var orders = new List<Order>();
