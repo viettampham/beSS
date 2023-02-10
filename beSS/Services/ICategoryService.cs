@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using beSS.Models;
 using beSS.Models.RequestModels;
+using beSS.Models.ViewModels;
 
 namespace beSS.Services
 {
@@ -10,6 +11,6 @@ namespace beSS.Services
         List<Category> GetCategory();
         Category CreateCategory(CreateCategory request);
         Category EditCategory(EditCategory request);
-        bool DeleteCategory(Guid id);
+        MessageResponse DeleteCategory(Guid id);
     }
 }

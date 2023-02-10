@@ -11,6 +11,6 @@ namespace beSS.Services
         List<OrderResponse> GetOrder();
         OrderResponse CreateOrder(CreateOrder request);
         OrderResponse EditOrder(EditOrder request);
-        bool DeleteOrder(Guid guid);
+        MessageResponse DeleteOrder(Guid guid);
     }
 }

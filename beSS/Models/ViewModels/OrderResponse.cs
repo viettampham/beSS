@@ -17,6 +17,9 @@ namespace beSS.Models.ViewModels
         public string Brand { get; set; }
 
         public List<Category> Categories { get; set; }
+        public int QuantityOrder { get; set; }
         public int TotalMoney { get; set; }
+        public bool IsinCart { get; set; }
+
     }
 }

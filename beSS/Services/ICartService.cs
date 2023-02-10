@@ -12,5 +12,6 @@ namespace beSS.Services
         List<Cart> GetList();
         MessageResponse CreateCart(Guid id);
         MessageResponse DeleteCart(Guid id);
+        MessageResponse RemoveOrderInCart(Guid id);
     }
 }

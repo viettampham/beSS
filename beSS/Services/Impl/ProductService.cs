@@ -15,10 +15,10 @@ namespace beSS.Services.Impl
         {
             _context = context;
         }
-        public List<Product> GetProduct()
+        public List<ProductResponse> GetProduct()
         {
             var listProduct = _context.Products
-                .Select(p => new Product()
+                .Select(p => new ProductResponse()
                 {
                     ProductID = p.ProductID,
                     Name = p.Name,
@@ -28,18 +28,22 @@ namespace beSS.Services.Impl
                     Price = p.Price,
                     Size = p.Size,
                     Brand = p.Brand,
-                    Categories = p.Categories
+                    Categorys = p.Categories
                 }).ToList();
             return listProduct;
         }
 
-        public Product CreateProduct(CreateProduct request)
+        public MessageResponse CreateProduct(CreateProduct request)
         {
             var listCategory = new List<Category>();
             request.CategoryIDs.ForEach(id =>
             {
                 var targetCategory = _context.Categories
                     .FirstOrDefault(c => c.CategoryID == id);
+                if (targetCategory == null)
+                {
+                    throw new Exception("not found this category");
+                }
                 listCategory.Add(targetCategory);
             });
             var newProduct = new Product()
@@ -56,8 +60,12 @@ namespace beSS.Services.Impl
             };
             _context.Add(newProduct);
             _context.SaveChanges();
-            
-            return newProduct;
+
+            return new MessageResponse()
+            {
+                Status = 200,
+                Message = "Success"
+            };
         }
 
         public ProductResponse EditProduct(EditProduct request)

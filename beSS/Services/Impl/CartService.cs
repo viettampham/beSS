@@ -45,7 +45,11 @@ namespace beSS.Services.Impl
                     TotalMoney = o.TotalMoney
                 }).ToList();*/
             var cartResponse = _context.Carts
-                .FirstOrDefault(c => c.UserID == id);
+                .FirstOrDefault(c => c.UserID == id && c.IsinBill == false);
+            if (cartResponse == null)
+            {
+                throw new Exception("not found this cart");
+            }
             return new CartResponse()
             {
                 CartID = cartResponse.CartID,
@@ -68,7 +72,7 @@ namespace beSS.Services.Impl
                         Categories = o.Product.Categories,
                         TotalMoney = o.TotalMoney
                     }).ToList(),
-                TotalMoneyCart = cartResponse.TotalMoneyCart
+                TotalMoneyCart = cartResponse.TotalMoneyCart,
             };
         }
 
@@ -110,7 +114,8 @@ namespace beSS.Services.Impl
                         .Include(o=>o.Product)
                         .Where(o=>o.UserID == c.UserID)
                         .Select(o=>o).ToList(),
-                    TotalMoneyCart = c.TotalMoneyCart
+                    TotalMoneyCart = c.TotalMoneyCart,
+                    IsinBill = c.IsinBill
                 }).ToList();
             return listCart;
         }
@@ -132,7 +137,7 @@ namespace beSS.Services.Impl
             int totalCart = 0;
             foreach (var order in ListOrder)
             {
-                if (order.UserID == id)
+                if (order.UserID == id && order.IsinCart == false)
                 {
                     orders.Add(order);
                     totalCart = totalCart + order.TotalMoney;
@@ -144,8 +149,14 @@ namespace beSS.Services.Impl
                 CartID = Guid.NewGuid(),
                 UserID = id,
                 Orders = orders,
-                TotalMoneyCart = totalCart
+                TotalMoneyCart = totalCart,
+                IsinBill = false
             };
+            /*foreach (var order in ListOrder)
+            {
+                order.IsinCart = true;
+                _context.SaveChanges();
+            }*/
             _context.Add(newCart);
             _context.SaveChanges();
             return new MessageResponse()
@@ -173,6 +184,11 @@ namespace beSS.Services.Impl
                 Status = 200,
                 Message = "Xóa cart thành công"
             };
+        }
+
+        public MessageResponse RemoveOrderInCart(Guid id)
+        {
+            return new MessageResponse();
         }
     }
 }

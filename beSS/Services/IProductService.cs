@@ -8,8 +8,8 @@ namespace beSS.Services
 {
     public interface IProductService
     {
-        List<Product> GetProduct();
-        Product CreateProduct(CreateProduct request);
+        List<ProductResponse> GetProduct();
+        MessageResponse CreateProduct(CreateProduct request);
         ProductResponse EditProduct(EditProduct request);
         bool DeleteProduct(Guid id);
     }

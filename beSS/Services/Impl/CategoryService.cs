@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using beSS.Models;
 using beSS.Models.RequestModels;
+using beSS.Models.ViewModels;
 
 namespace beSS.Services.Impl
 {
@@ -52,18 +53,25 @@ namespace beSS.Services.Impl
             return taretCategory;
         }
 
-        public bool DeleteCategory(Guid id)
+        public MessageResponse DeleteCategory(Guid id)
         {
             var taretCategory = _context.Categories.FirstOrDefault(c => c.CategoryID == id);
             if (taretCategory != null)
             {
                 _context.Remove(taretCategory);
                 _context.SaveChanges();
-                return true;
+                return new MessageResponse()
+                {
+                    Status = 200,
+                    Message = "Success"
+                };
             }
 
-            return false;
-
+            return new MessageResponse()
+            {
+                Status = 200,
+                Message = "Not found this category"
+            };
         }
     }
 }
