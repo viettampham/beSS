@@ -1,4 +1,4 @@
-﻿using System;
+﻿/*using System;
 using System.Collections.Generic;
 using System.Linq;
 using beSS.Models;
@@ -43,7 +43,7 @@ namespace beSS.Services.Impl
                     Brand = o.Product.Brand,
                     Categories = o.Product.Categories,
                     TotalMoney = o.TotalMoney
-                }).ToList();*/
+                }).ToList();#1#
             var cartResponse = _context.Carts
                 .FirstOrDefault(c => c.UserID == id && c.IsinBill == false);
             if (cartResponse == null)
@@ -70,6 +70,7 @@ namespace beSS.Services.Impl
                         Size = o.Product.Size,
                         Brand = o.Product.Brand,
                         Categories = o.Product.Categories,
+                        QuantityOrder = o.QuantityOrder,
                         TotalMoney = o.TotalMoney
                     }).ToList(),
                 TotalMoneyCart = cartResponse.TotalMoneyCart,
@@ -103,7 +104,7 @@ namespace beSS.Services.Impl
                             TotalMoney = o.TotalMoney
                         }).ToList(),
                     TotalMoneyCart = c.TotalMoneyCart
-                }).ToList();*/
+                }).ToList();#1#
             var listCart = _context.Carts
                 .Include(c=>c.Orders)
                 .Select(c => new Cart()
@@ -152,11 +153,6 @@ namespace beSS.Services.Impl
                 TotalMoneyCart = totalCart,
                 IsinBill = false
             };
-            /*foreach (var order in ListOrder)
-            {
-                order.IsinCart = true;
-                _context.SaveChanges();
-            }*/
             _context.Add(newCart);
             _context.SaveChanges();
             return new MessageResponse()
@@ -179,6 +175,9 @@ namespace beSS.Services.Impl
                 };
             }
 
+            _context.Remove(targetCart);
+            _context.SaveChanges();
+
             return new MessageResponse()
             {
                 Status = 200,
@@ -186,9 +185,25 @@ namespace beSS.Services.Impl
             };
         }
 
-        public MessageResponse RemoveOrderInCart(Guid id)
+        public MessageResponse RemoveOrderInCart(RemoveOrderInCartRequest request)
         {
-            return new MessageResponse();
+            var targetOrder = _context.Orders
+                .FirstOrDefault(o => o.OrderID == request.OrderID);
+            _context.Remove(targetOrder);
+            var targetCart = _context.Carts.FirstOrDefault(c => c.UserID == request.UserID && c.IsinBill == false);
+            int totalCart = 0;
+            foreach (var targetCartOrder in targetCart.Orders)
+            {
+                totalCart = 0 + targetCartOrder.TotalMoney;
+            }
+
+            targetCart.TotalMoneyCart = totalCart;
+                _context.SaveChanges();
+            return new MessageResponse()
+            {
+                Status = 200,
+                Message = "Xoa thanh cong"
+            };
         }
     }
-}
+}*/

@@ -16,7 +16,7 @@ namespace beSS.Controllers
             _cartService = cartService;
         }
 
-        [HttpGet("get-cart-by-user")]
+        [HttpGet("get-cart-by-user/{id}")]
         public IActionResult GetCartByUser(Guid id)
         {
             var targetCart = _cartService.GetCartByUser(id);
@@ -41,6 +41,12 @@ namespace beSS.Controllers
         public IActionResult DeleteCart(Guid id)
         {
             return Ok(_cartService.DeleteCart(id));
+        }
+        
+        [HttpPost("remove-order-in-cart")]
+        public IActionResult RemoveOrderInCart(RemoveOrderInCartRequest request)
+        {
+            return Ok(_cartService.RemoveOrderInCart(request));
         }
     }
 }

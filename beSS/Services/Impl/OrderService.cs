@@ -33,7 +33,31 @@ namespace beSS.Services.Impl
                 Categories = o.Product.Categories,
                 QuantityOrder = o.QuantityOrder,
                 TotalMoney = o.TotalMoney,
-                IsinCart = o.IsinCart
+                IsinCart = o.IsinBill
+            }).ToList();
+            return listOrder;
+        }
+
+        public List<OrderResponse> GetOrderByUser(Guid id)
+        {
+            var listOrder = _context.Orders
+                .Where(o=>o.UserID == id && o.IsinBill == false)
+                .Select(o => new OrderResponse()
+            {
+                OrderID = o.OrderID,
+                UserID = o.UserID,
+                ProductID = o.Product.ProductID,
+                Name = o.Product.Name,
+                Description = o.Product.Description,
+                ImageURL = o.Product.ImageURL,
+                QuantityAvailable = o.Product.QuantityAvailable,
+                Price = o.Product.Price,
+                Size = o.Product.Size,
+                Brand = o.Product.Brand,
+                Categories = o.Product.Categories,
+                QuantityOrder = o.QuantityOrder,
+                TotalMoney = o.TotalMoney,
+                IsinCart = o.IsinBill
             }).ToList();
             return listOrder;
         }
@@ -47,7 +71,7 @@ namespace beSS.Services.Impl
 
             var checkOrder = _context.Orders
                 .Include(o=>o.Product)
-                .FirstOrDefault(o => o.UserID == request.UserID && o.Product.ProductID == request.ProductID && o.IsinCart == false);
+                .FirstOrDefault(o => o.UserID == request.UserID && o.Product.ProductID == request.ProductID && o.IsinBill == false);
             
             if (checkOrder!=null)
             {
@@ -69,7 +93,7 @@ namespace beSS.Services.Impl
                     Categories = checkOrder.Product.Categories,
                     QuantityOrder = checkOrder.QuantityOrder,
                     TotalMoney = checkOrder.TotalMoney,
-                    IsinCart = checkOrder.IsinCart
+                    IsinCart = checkOrder.IsinBill
                 };
             }
 
@@ -86,7 +110,7 @@ namespace beSS.Services.Impl
                 Product = targetProduct,
                 QuantityOrder = request.QuantityOrder,
                 TotalMoney = targetProduct.Price * request.QuantityOrder,
-                IsinCart = false
+                IsinBill = false
             };
             _context.Add(newOrder);
             _context.SaveChanges();
@@ -105,7 +129,7 @@ namespace beSS.Services.Impl
                 Categories = newOrder.Product.Categories,
                 QuantityOrder = newOrder.QuantityOrder,
                 TotalMoney = newOrder.TotalMoney,
-                IsinCart = newOrder.IsinCart
+                IsinCart = newOrder.IsinBill
             };
         }
 
@@ -118,6 +142,7 @@ namespace beSS.Services.Impl
         {
             var targetOrder = _context.Orders.FirstOrDefault(o => o.OrderID == id);
             _context.Remove(targetOrder);
+            _context.SaveChanges();
             return new MessageResponse()
             {
                 Status = 200,

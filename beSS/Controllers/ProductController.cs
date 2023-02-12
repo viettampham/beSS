@@ -1,4 +1,5 @@
-﻿using beSS.Models.RequestModels;
+﻿using System;
+using beSS.Models.RequestModels;
 using beSS.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,6 +21,27 @@ namespace beSS.Controllers
         {
             var listProduct = _productService.GetProduct();
             return Ok(listProduct);
+        }
+        
+        [HttpGet("get-product-by-category-id/{id}")]
+        public IActionResult GetProductBuCategoryID(Guid id)
+        {
+            var listProduct = _productService.GetProductByCategoryID(id);
+            return Ok(listProduct);
+        }
+        
+        [HttpGet("get-brand")]
+        public IActionResult GetBrand()
+        {
+            var listBrand = _productService.Brand();
+            return Ok(listBrand);
+        }
+        
+        [HttpGet("get-product-by-brand/{brand}")]
+        public IActionResult GetBrand(string brand)
+        {
+            var listBrand = _productService.GetProductByBrand(brand);
+            return Ok(listBrand);
         }
         
         [HttpPost("add-product")]

@@ -10,6 +10,7 @@ namespace beSS.Models
         public Product Product { get; set; }
         public int QuantityOrder { get; set; }
         public int TotalMoney { get; set; }
-        public bool IsinCart { get; set; }
+        public bool IsinBill { get; set; }
+        public Guid BillID { get; set; }
     }
 }

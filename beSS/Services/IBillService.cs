@@ -9,8 +9,10 @@ namespace beSS.Services
     public interface IBillService
     {
         List<BillResponse> GetAll();
-        List<BillResponse> GetAllBillByUser(Guid id);
+        List<BillResponse> GetAllBillNoPayedByUser(Guid id);
+        List<BillResponse> GetAllBillPayedByUser(Guid id);
         MessageResponse CreateBill(CreateBillRequest request);
         MessageResponse DeleteBill(Guid id);
+        MessageResponse ConFirmBill(Guid id);
     }
 }

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using beSS.Models;
@@ -9,9 +10,10 @@ using beSS.Models;
 namespace beSS.Migrations
 {
     [DbContext(typeof(MasterDbContext))]
-    partial class MasterDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230212012322_initDb11")]
+    partial class initDb11
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -287,7 +289,7 @@ namespace beSS.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("BillID")
+                    b.Property<Guid?>("BillID")
                         .HasColumnType("uuid");
 
                     b.Property<bool>("IsinBill")
@@ -423,9 +425,7 @@ namespace beSS.Migrations
                 {
                     b.HasOne("beSS.Models.Bill", null)
                         .WithMany("Orders")
-                        .HasForeignKey("BillID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("BillID");
 
                     b.HasOne("beSS.Models.Product", "Product")
                         .WithMany()

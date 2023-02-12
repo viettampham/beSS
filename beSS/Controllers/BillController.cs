@@ -22,10 +22,16 @@ namespace beSS.Controllers
             return Ok(_billService.GetAll());
         }
         
-        [HttpGet("user-get-bill")]
-        public IActionResult GetBillByUser(Guid id)
+        [HttpGet("user-get-bill-no-payed/{id}")]
+        public IActionResult GetBillNoPayedByUser(Guid id)
         {
-            return Ok(_billService.GetAllBillByUser(id));
+            return Ok(_billService.GetAllBillNoPayedByUser(id));
+        }
+        
+        [HttpGet("user-get-bill-payed/{id}")]
+        public IActionResult GetBillPayedByUser(Guid id)
+        {
+            return Ok(_billService.GetAllBillPayedByUser(id));
         }
 
         [HttpPost("create-bill")]
@@ -38,6 +44,12 @@ namespace beSS.Controllers
         public IActionResult DeleteBill(Guid id)
         {
             return Ok(_billService.DeleteBill(id));
+        }
+
+        [HttpPost("confirm-bill/{id}")]
+        public IActionResult ConfirmBill(Guid id)
+        {
+            return Ok(_billService.ConFirmBill(id));
         }
     }
 }
