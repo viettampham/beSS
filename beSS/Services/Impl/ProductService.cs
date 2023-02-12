@@ -144,9 +144,43 @@ namespace beSS.Services.Impl
             throw new NotImplementedException();
         }
 
-        public bool DeleteProduct(Guid id)
+        public MessageResponse DeleteProduct(Guid id)
         {
-            throw new NotImplementedException();
+            var targetProduct = _context.Products.FirstOrDefault(p => p.ProductID == id);
+            _context.Remove(targetProduct);
+            _context.SaveChanges();
+            if (targetProduct == null)
+            {
+                return new MessageResponse()
+                {
+                    Status = 404,
+                    Message = "Not found thí product in database"
+                };
+            }
+            return new MessageResponse()
+            {
+                Status = 200,
+                Message = "Xóa thành công"
+            };
+        }
+
+        public List<ProductResponse> SearchProduct(string request)
+        {
+            var listProduct = _context.Products
+                .Where(p => p.Brand.ToLower() == request.ToLower() || p.Name.ToLower().Contains(request.ToLower()))
+                .Select(p => new ProductResponse()
+                {
+                    ProductID = p.ProductID,
+                    Name = p.Name,
+                    Description = p.Description,
+                    ImageURL = p.ImageURL,
+                    QuantityAvailable = p.QuantityAvailable,
+                    Price = p.Price,
+                    Size = p.Size,
+                    Brand = p.Brand,
+                    Categorys = p.Categories
+                }).ToList();
+            return listProduct;
         }
     }
 }

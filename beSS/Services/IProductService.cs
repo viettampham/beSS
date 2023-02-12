@@ -14,6 +14,7 @@ namespace beSS.Services
         List<ProductResponse> GetProductByCategoryID(Guid id);
         MessageResponse CreateProduct(CreateProduct request);
         ProductResponse EditProduct(EditProduct request);
-        bool DeleteProduct(Guid id);
+        MessageResponse DeleteProduct(Guid id);
+        List<ProductResponse> SearchProduct(string request);
     }
 }

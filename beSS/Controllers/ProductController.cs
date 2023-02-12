@@ -50,5 +50,17 @@ namespace beSS.Controllers
             var newProduct = _productService.CreateProduct(request);
             return Ok(newProduct);
         }
+
+        [HttpGet("search-product/{request}")]
+        public IActionResult SearchProduct(string request)
+        {
+            return Ok(_productService.SearchProduct(request));
+        }
+
+        [HttpDelete("delete-product/{id}")]
+        public IActionResult DeleteProduct(Guid id)
+        {
+            return Ok(_productService.DeleteProduct(id));
+        }
     }
 }
