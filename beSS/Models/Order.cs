@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace beSS.Models
 {
@@ -11,6 +12,6 @@ namespace beSS.Models
         public int QuantityOrder { get; set; }
         public int TotalMoney { get; set; }
         public bool IsinBill { get; set; }
-        public Guid BillID { get; set; }
+        public Guid IDOB { get; set; }
     }
 }

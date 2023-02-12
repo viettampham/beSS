@@ -25,7 +25,7 @@ namespace beSS.Services.Impl
                     BillID = b.BillID,
                     UserID = b.UserID,
                     Orders = _context.Orders.Include(o=>o.Product)
-                        .Where(o=>o.BillID == b.BillID && o.UserID == b.UserID && o.IsinBill == true)
+                        .Where(o=>o.IDOB == b.BillID && o.UserID == b.UserID && o.IsinBill == true)
                         .Select(o=>new OrderResponse()
                         {
                             OrderID = o.OrderID,
@@ -41,7 +41,7 @@ namespace beSS.Services.Impl
                             Categories = o.Product.Categories,
                             QuantityOrder = o.QuantityOrder,
                             TotalMoney = o.TotalMoney,
-                            IsinCart = o.IsinBill
+                            IsinBill = o.IsinBill
                         }).ToList(),
                     TotalBill = b.TotalBill,
                     AddressTranfer = b.AddressTranfer,
@@ -61,7 +61,7 @@ namespace beSS.Services.Impl
                     BillID = b.BillID,
                     UserID = b.UserID,
                     Orders = _context.Orders.Include(o=>o.Product)
-                        .Where(o=>o.BillID == b.BillID && o.UserID == b.UserID && o.IsinBill == true)
+                        .Where(o=>o.IDOB == b.BillID && o.UserID == b.UserID && o.IsinBill == true)
                         .Select(o=>new OrderResponse()
                         {
                             OrderID = o.OrderID,
@@ -77,7 +77,7 @@ namespace beSS.Services.Impl
                             Categories = o.Product.Categories,
                             QuantityOrder = o.QuantityOrder,
                             TotalMoney = o.TotalMoney,
-                            IsinCart = o.IsinBill
+                            IsinBill = o.IsinBill
                         }).ToList(),
                     TotalBill = b.TotalBill,
                     AddressTranfer = b.AddressTranfer,
@@ -97,7 +97,7 @@ namespace beSS.Services.Impl
                     BillID = b.BillID,
                     UserID = b.UserID,
                     Orders = _context.Orders.Include(o=>o.Product)
-                        .Where(o=>o.BillID == b.BillID && o.UserID == b.UserID && o.IsinBill == true)
+                        .Where(o=>o.IDOB == b.BillID && o.UserID == b.UserID && o.IsinBill == true)
                         .Select(o=>new OrderResponse()
                         {
                             OrderID = o.OrderID,
@@ -113,7 +113,7 @@ namespace beSS.Services.Impl
                             Categories = o.Product.Categories,
                             QuantityOrder = o.QuantityOrder,
                             TotalMoney = o.TotalMoney,
-                            IsinCart = o.IsinBill
+                            IsinBill = o.IsinBill
                         }).ToList(),
                     TotalBill = b.TotalBill,
                     AddressTranfer = b.AddressTranfer,
@@ -151,7 +151,7 @@ namespace beSS.Services.Impl
             foreach (var order in listOrderTarget)
             {
                 order.IsinBill = true;
-                order.BillID = newBill.BillID;
+                order.IDOB = newBill.BillID;
             }
             _context.SaveChanges();
             return new MessageResponse()

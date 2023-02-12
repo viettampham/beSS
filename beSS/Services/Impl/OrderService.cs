@@ -33,7 +33,7 @@ namespace beSS.Services.Impl
                 Categories = o.Product.Categories,
                 QuantityOrder = o.QuantityOrder,
                 TotalMoney = o.TotalMoney,
-                IsinCart = o.IsinBill
+                IsinBill = o.IsinBill
             }).ToList();
             return listOrder;
         }
@@ -57,7 +57,7 @@ namespace beSS.Services.Impl
                 Categories = o.Product.Categories,
                 QuantityOrder = o.QuantityOrder,
                 TotalMoney = o.TotalMoney,
-                IsinCart = o.IsinBill
+                IsinBill = o.IsinBill
             }).ToList();
             return listOrder;
         }
@@ -73,10 +73,10 @@ namespace beSS.Services.Impl
                 .Include(o=>o.Product)
                 .FirstOrDefault(o => o.UserID == request.UserID && o.Product.ProductID == request.ProductID && o.IsinBill == false);
             
-            if (checkOrder!=null)
+            if (checkOrder != null)
             {
                 checkOrder.QuantityOrder = checkOrder.QuantityOrder + request.QuantityOrder;
-                checkOrder.TotalMoney = checkOrder.QuantityOrder * checkOrder.Product.Price;
+                checkOrder.TotalMoney = checkOrder.TotalMoney + request.QuantityOrder * checkOrder.Product.Price;
                 _context.SaveChanges();
                 return new OrderResponse()
                 {
@@ -93,24 +93,22 @@ namespace beSS.Services.Impl
                     Categories = checkOrder.Product.Categories,
                     QuantityOrder = checkOrder.QuantityOrder,
                     TotalMoney = checkOrder.TotalMoney,
-                    IsinCart = checkOrder.IsinBill
+                    IsinBill = checkOrder.IsinBill,
+                    BillID = checkOrder.IDOB
                 };
             }
-
-            var targetProduct = _context.Products.FirstOrDefault(p => p.ProductID == request.ProductID);
-            if (targetProduct == null)
-            {
-                throw new Exception("not found");
-            }
-
+            
             var newOrder = new Order()
             {
                 OrderID = Guid.NewGuid(),
                 UserID = request.UserID,
-                Product = targetProduct,
+                Product = _context.Products
+                    .FirstOrDefault(p => p.ProductID == request.ProductID),
                 QuantityOrder = request.QuantityOrder,
-                TotalMoney = targetProduct.Price * request.QuantityOrder,
-                IsinBill = false
+                TotalMoney = request.QuantityOrder * _context.Products
+                    .FirstOrDefault(p => p.ProductID == request.ProductID)!.Price,
+                IsinBill = false,
+                IDOB = Guid.Empty
             };
             _context.Add(newOrder);
             _context.SaveChanges();
@@ -129,7 +127,8 @@ namespace beSS.Services.Impl
                 Categories = newOrder.Product.Categories,
                 QuantityOrder = newOrder.QuantityOrder,
                 TotalMoney = newOrder.TotalMoney,
-                IsinCart = newOrder.IsinBill
+                IsinBill = newOrder.IsinBill,
+                BillID = newOrder.IDOB
             };
         }
 
