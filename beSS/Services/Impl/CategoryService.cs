@@ -42,7 +42,7 @@ namespace beSS.Services.Impl
 
         public Category EditCategory(EditCategory request)
         {
-            var taretCategory = _context.Categories.FirstOrDefault(c => c.CategoryID == request.id);
+            var taretCategory = _context.Categories.FirstOrDefault(c => c.CategoryID == request.CategoryID);
             if (taretCategory == null)
             {
                 throw new Exception("not found");

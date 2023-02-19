@@ -13,6 +13,7 @@ namespace beSS.Models
         public DbSet<Order> Orders { get; set; }
         public DbSet<Bill> Bills { get; set; }
         
+
         public MasterDbContext(DbContextOptions<MasterDbContext> options) : base(options)
         {
             

@@ -49,6 +49,7 @@ namespace beSS.Services.Impl
                     ImageURL = p.ImageURL,
                     QuantityAvailable = p.QuantityAvailable,
                     Price = p.Price,
+                    DisplayPrice = p.Price.ToString("#,## VNĐ"),
                     Size = p.Size,
                     Brand = p.Brand,
                     Categorys = p.Categories
@@ -68,6 +69,7 @@ namespace beSS.Services.Impl
                     ImageURL = p.ImageURL,
                     QuantityAvailable = p.QuantityAvailable,
                     Price = p.Price,
+                    DisplayPrice = p.Price.ToString("#,## VNĐ"),
                     Size = p.Size,
                     Brand = p.Brand,
                     Categorys = p.Categories
@@ -86,6 +88,7 @@ namespace beSS.Services.Impl
                 ImageURL = p.ImageURL,
                 QuantityAvailable = p.QuantityAvailable,
                 Price = p.Price,
+                DisplayPrice = p.Price.ToString("#,## VNĐ"),
                 Size = p.Size,
                 Brand = p.Brand,
                 Categorys = p.Categories
@@ -139,9 +142,52 @@ namespace beSS.Services.Impl
             };
         }
 
-        public ProductResponse EditProduct(EditProduct request)
+        public MessageResponse EditProduct(EditProduct request)
         {
-            throw new NotImplementedException();
+            var targetProduct = _context.Products.FirstOrDefault(p => p.ProductID == request.ProductID);
+            if (targetProduct == null)
+            {
+                return new MessageResponse()
+                {
+                    Status = 401,
+                    Message = "Not found this product"
+                };
+            }
+            
+           targetProduct.Categories.Clear();
+
+            var categorys = new List<Category>();
+            foreach (var id in request.CategorieIDs)
+            {
+                var targetCategory = _context.Categories.FirstOrDefault(c => c.CategoryID == id);
+                if (targetCategory == null)
+                {
+                    return new MessageResponse()
+                    {
+                        Status = 401,
+                        Message = "Not found this category"
+                    };
+                }
+                else
+                {
+                    categorys.Add(targetCategory);
+                }
+            }
+            
+            targetProduct.Name = request.Name;
+            targetProduct.Description = request.Description;
+            targetProduct.ImageURL = request.ImageURL;
+            targetProduct.QuantityAvailable = request.QuantityAvailable;
+            targetProduct.Price = request.Price;
+            targetProduct.Size = request.Size;
+            targetProduct.Brand = request.Brand;
+            targetProduct.Categories = categorys;
+            _context.SaveChanges();
+            return new MessageResponse()
+            {
+                Status = 200,
+                Message = "Update success"
+            };
         }
 
         public MessageResponse DeleteProduct(Guid id)
@@ -176,6 +222,7 @@ namespace beSS.Services.Impl
                     ImageURL = p.ImageURL,
                     QuantityAvailable = p.QuantityAvailable,
                     Price = p.Price,
+                    DisplayPrice = p.Price.ToString("#,## VND"),
                     Size = p.Size,
                     Brand = p.Brand,
                     Categorys = p.Categories

@@ -62,5 +62,11 @@ namespace beSS.Controllers
         {
             return Ok(_productService.DeleteProduct(id));
         }
+
+        [HttpPost("update")]
+        public IActionResult UpdateProduct(EditProduct request)
+        {
+            return Ok(_productService.EditProduct(request));
+        }
     }
 }

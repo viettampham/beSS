@@ -13,7 +13,7 @@ namespace beSS.Services
         List<ProductResponse> GetProductByBrand(string brand);
         List<ProductResponse> GetProductByCategoryID(Guid id);
         MessageResponse CreateProduct(CreateProduct request);
-        ProductResponse EditProduct(EditProduct request);
+        MessageResponse EditProduct(EditProduct request);
         MessageResponse DeleteProduct(Guid id);
         List<ProductResponse> SearchProduct(string request);
     }

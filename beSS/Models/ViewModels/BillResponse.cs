@@ -9,6 +9,7 @@ namespace beSS.Models.ViewModels
         public Guid UserID { get; set; }
         public List<OrderResponse> Orders { get; set; }
         public int TotalBill { get; set; }
+        public string DisplayTotalBill { get; set; }
         public string AddressTranfer { get; set; }
         public string NameCustomer { get; set; }
         public string PhoneNumber { get; set; }

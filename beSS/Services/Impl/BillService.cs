@@ -36,14 +36,56 @@ namespace beSS.Services.Impl
                             ImageURL = o.Product.ImageURL,
                             QuantityAvailable = o.Product.QuantityAvailable,
                             Price = o.Product.Price,
+                            DisplayPrice = o.Product.Price.ToString("#,## VND"),
                             Size = o.Product.Size,
                             Brand = o.Product.Brand,
                             Categories = o.Product.Categories,
                             QuantityOrder = o.QuantityOrder,
                             TotalMoney = o.TotalMoney,
+                            DisplayTotalMoney = o.TotalMoney.ToString("#,## VND"),
                             IsinBill = o.IsinBill
                         }).ToList(),
                     TotalBill = b.TotalBill,
+                    DisplayTotalBill = b.TotalBill.ToString("#,## VND"),
+                    AddressTranfer = b.AddressTranfer,
+                    NameCustomer = b.NameCustomer,
+                    PhoneNumber = b.PhoneNumber,
+                    IsPayed = b.IsPayed
+                }).ToList();
+            return listBill;
+        }
+
+        public List<BillResponse> SearchBillByName(string CustomerName)
+        {
+            var listBill = _context.Bills
+                .Where(b=>b.NameCustomer.ToLower().Contains(CustomerName.ToLower()))
+                .Select(b => new BillResponse()
+                {
+                    BillID = b.BillID,
+                    UserID = b.UserID,
+                    Orders = _context.Orders.Include(o=>o.Product)
+                        .Where(o=>o.IDOB == b.BillID && o.UserID == b.UserID && o.IsinBill == true)
+                        .Select(o=>new OrderResponse()
+                        {
+                            OrderID = o.OrderID,
+                            UserID = o.UserID,
+                            ProductID = o.Product.ProductID,
+                            Name = o.Product.Name,
+                            Description = o.Product.Description,
+                            ImageURL = o.Product.ImageURL,
+                            QuantityAvailable = o.Product.QuantityAvailable,
+                            Price = o.Product.Price,
+                            DisplayPrice = o.Product.Price.ToString("#,## VND"),
+                            Size = o.Product.Size,
+                            Brand = o.Product.Brand,
+                            Categories = o.Product.Categories,
+                            QuantityOrder = o.QuantityOrder,
+                            TotalMoney = o.TotalMoney,
+                            DisplayTotalMoney = o.TotalMoney.ToString("#,## VND"),
+                            IsinBill = o.IsinBill
+                        }).ToList(),
+                    TotalBill = b.TotalBill,
+                    DisplayTotalBill = b.TotalBill.ToString("#,## VND"),
                     AddressTranfer = b.AddressTranfer,
                     NameCustomer = b.NameCustomer,
                     PhoneNumber = b.PhoneNumber,
@@ -72,14 +114,17 @@ namespace beSS.Services.Impl
                             ImageURL = o.Product.ImageURL,
                             QuantityAvailable = o.Product.QuantityAvailable,
                             Price = o.Product.Price,
+                            DisplayPrice = o.Product.Price.ToString("#,## VND"),
                             Size = o.Product.Size,
                             Brand = o.Product.Brand,
                             Categories = o.Product.Categories,
                             QuantityOrder = o.QuantityOrder,
                             TotalMoney = o.TotalMoney,
+                            DisplayTotalMoney = o.TotalMoney.ToString("#,## VND"),
                             IsinBill = o.IsinBill
                         }).ToList(),
                     TotalBill = b.TotalBill,
+                    DisplayTotalBill = b.TotalBill.ToString("#,## VND"),
                     AddressTranfer = b.AddressTranfer,
                     NameCustomer = b.NameCustomer,
                     PhoneNumber = b.PhoneNumber,
@@ -108,14 +153,17 @@ namespace beSS.Services.Impl
                             ImageURL = o.Product.ImageURL,
                             QuantityAvailable = o.Product.QuantityAvailable,
                             Price = o.Product.Price,
+                            DisplayPrice = o.Product.Price.ToString("#,## VND"),
                             Size = o.Product.Size,
                             Brand = o.Product.Brand,
                             Categories = o.Product.Categories,
                             QuantityOrder = o.QuantityOrder,
                             TotalMoney = o.TotalMoney,
+                            DisplayTotalMoney = o.TotalMoney.ToString("#,## VND"),
                             IsinBill = o.IsinBill
                         }).ToList(),
                     TotalBill = b.TotalBill,
+                    DisplayTotalBill = b.TotalBill.ToString("#,## VND"),
                     AddressTranfer = b.AddressTranfer,
                     NameCustomer = b.NameCustomer,
                     PhoneNumber = b.PhoneNumber,

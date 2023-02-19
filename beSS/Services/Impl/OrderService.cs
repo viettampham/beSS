@@ -28,11 +28,13 @@ namespace beSS.Services.Impl
                 ImageURL = o.Product.ImageURL,
                 QuantityAvailable = o.Product.QuantityAvailable,
                 Price = o.Product.Price,
+                DisplayPrice = o.Product.Price.ToString("#,## VND"),
                 Size = o.Product.Size,
                 Brand = o.Product.Brand,
                 Categories = o.Product.Categories,
                 QuantityOrder = o.QuantityOrder,
                 TotalMoney = o.TotalMoney,
+                DisplayTotalMoney = o.TotalMoney.ToString("#,## VND"),
                 IsinBill = o.IsinBill
             }).ToList();
             return listOrder;
@@ -52,11 +54,13 @@ namespace beSS.Services.Impl
                 ImageURL = o.Product.ImageURL,
                 QuantityAvailable = o.Product.QuantityAvailable,
                 Price = o.Product.Price,
+                DisplayPrice = o.Product.Price.ToString("#,## VND"),
                 Size = o.Product.Size,
                 Brand = o.Product.Brand,
                 Categories = o.Product.Categories,
                 QuantityOrder = o.QuantityOrder,
                 TotalMoney = o.TotalMoney,
+                DisplayTotalMoney = o.TotalMoney.ToString("#,## VND"),
                 IsinBill = o.IsinBill
             }).ToList();
             return listOrder;
@@ -88,11 +92,13 @@ namespace beSS.Services.Impl
                     ImageURL = checkOrder.Product.ImageURL,
                     QuantityAvailable = checkOrder.Product.QuantityAvailable,
                     Price = checkOrder.Product.Price,
+                    DisplayPrice = checkOrder.Product.Price.ToString("#,## VND"),
                     Size = checkOrder.Product.Size,
                     Brand = checkOrder.Product.Brand,
                     Categories = checkOrder.Product.Categories,
                     QuantityOrder = checkOrder.QuantityOrder,
                     TotalMoney = checkOrder.TotalMoney,
+                    DisplayTotalMoney = checkOrder.TotalMoney.ToString("#,## VND"),
                     IsinBill = checkOrder.IsinBill,
                     BillID = checkOrder.IDOB
                 };
@@ -122,11 +128,13 @@ namespace beSS.Services.Impl
                 ImageURL = newOrder.Product.ImageURL,
                 QuantityAvailable = newOrder.Product.QuantityAvailable,
                 Price = newOrder.Product.Price,
+                DisplayPrice = newOrder.Product.Price.ToString("#,## VND"),
                 Size = newOrder.Product.Size,
                 Brand = newOrder.Product.Brand,
                 Categories = newOrder.Product.Categories,
                 QuantityOrder = newOrder.QuantityOrder,
                 TotalMoney = newOrder.TotalMoney,
+                DisplayTotalMoney = newOrder.TotalMoney.ToString("#,## VND"),
                 IsinBill = newOrder.IsinBill,
                 BillID = newOrder.IDOB
             };

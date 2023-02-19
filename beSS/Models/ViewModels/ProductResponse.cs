@@ -11,6 +11,7 @@ namespace beSS.Models.ViewModels
         public string ImageURL { get; set; }
         public int QuantityAvailable { get; set; }
         public int Price { get; set; }
+        public string DisplayPrice { get; set; }
         public string Size { get; set; }
         public string Brand { get; set; }
 

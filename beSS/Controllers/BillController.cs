@@ -40,7 +40,7 @@ namespace beSS.Controllers
             return Ok(_billService.CreateBill(request));
         }
 
-        [HttpDelete("delete-bill")]
+        [HttpDelete("delete-bill/{id}")]
         public IActionResult DeleteBill(Guid id)
         {
             return Ok(_billService.DeleteBill(id));
@@ -50,6 +50,12 @@ namespace beSS.Controllers
         public IActionResult ConfirmBill(Guid id)
         {
             return Ok(_billService.ConFirmBill(id));
+        }
+
+        [HttpGet("search-bill-by-name/{CustomerName}")]
+        public IActionResult SearchBillByName(string CustomerName)
+        {
+            return Ok(_billService.SearchBillByName(CustomerName));
         }
     }
 }

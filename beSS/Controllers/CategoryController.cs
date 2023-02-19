@@ -37,7 +37,7 @@ namespace beSS.Controllers
             return Ok(targetCategory);
         }
         
-        [HttpDelete("delete-category")]
+        [HttpDelete("delete-category/{id}")]
         public IActionResult DeleteCategory(Guid id)
         {
             var targetCategory = _categoryService.DeleteCategory(id);
