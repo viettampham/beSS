@@ -13,5 +13,6 @@ namespace beSS.Models
         public string NameCustomer { get; set; }
         public string PhoneNumber { get; set; }
         public bool IsPayed { get; set; }
+        public List<Guid> OrderIDs { get; set; }
     }
 }

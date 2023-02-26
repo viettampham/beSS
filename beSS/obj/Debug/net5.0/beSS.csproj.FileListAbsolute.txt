@@ -5,7 +5,6 @@ D:\TamSpace\WorkSpace\Đồ án tốt nghiệp Phạm Viết Tâm - ShoeStore\BE
 D:\TamSpace\WorkSpace\Đồ án tốt nghiệp Phạm Viết Tâm - ShoeStore\BE\beSS\beSS\bin\Debug\net5.0\beSS.runtimeconfig.json
 D:\TamSpace\WorkSpace\Đồ án tốt nghiệp Phạm Viết Tâm - ShoeStore\BE\beSS\beSS\bin\Debug\net5.0\beSS.runtimeconfig.dev.json
 D:\TamSpace\WorkSpace\Đồ án tốt nghiệp Phạm Viết Tâm - ShoeStore\BE\beSS\beSS\bin\Debug\net5.0\beSS.dll
-D:\TamSpace\WorkSpace\Đồ án tốt nghiệp Phạm Viết Tâm - ShoeStore\BE\beSS\beSS\bin\Debug\net5.0\ref\beSS.dll
 D:\TamSpace\WorkSpace\Đồ án tốt nghiệp Phạm Viết Tâm - ShoeStore\BE\beSS\beSS\bin\Debug\net5.0\beSS.pdb
 D:\TamSpace\WorkSpace\Đồ án tốt nghiệp Phạm Viết Tâm - ShoeStore\BE\beSS\beSS\bin\Debug\net5.0\Humanizer.dll
 D:\TamSpace\WorkSpace\Đồ án tốt nghiệp Phạm Viết Tâm - ShoeStore\BE\beSS\beSS\bin\Debug\net5.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
@@ -52,3 +51,4 @@ D:\TamSpace\WorkSpace\Đồ án tốt nghiệp Phạm Viết Tâm - ShoeStore\BE
 D:\TamSpace\WorkSpace\Đồ án tốt nghiệp Phạm Viết Tâm - ShoeStore\BE\beSS\beSS\obj\Debug\net5.0\ref\beSS.dll
 D:\TamSpace\WorkSpace\Đồ án tốt nghiệp Phạm Viết Tâm - ShoeStore\BE\beSS\beSS\obj\Debug\net5.0\beSS.pdb
 D:\TamSpace\WorkSpace\Đồ án tốt nghiệp Phạm Viết Tâm - ShoeStore\BE\beSS\beSS\obj\Debug\net5.0\beSS.genruntimeconfig.cache
+D:\TamSpace\WorkSpace\Đồ án tốt nghiệp Phạm Viết Tâm - ShoeStore\BE\beSS\beSS\bin\Debug\net5.0\ref\beSS.dll

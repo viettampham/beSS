@@ -57,5 +57,11 @@ namespace beSS.Controllers
         {
             return Ok(_billService.SearchBillByName(CustomerName));
         }
+        
+        [HttpGet("search-bill-by-id/{id}")]
+        public IActionResult GetBillByID(Guid id)
+        {
+            return Ok(_billService.GetBillById(id));
+        }
     }
 }

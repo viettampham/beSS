@@ -154,7 +154,7 @@ namespace beSS.Services.Impl
                 };
             }
             
-           targetProduct.Categories.Clear();
+            //targetProduct.Categories.Clear();
 
             var categorys = new List<Category>();
             foreach (var id in request.CategorieIDs)
@@ -168,9 +168,14 @@ namespace beSS.Services.Impl
                         Message = "Not found this category"
                     };
                 }
-                else
+
+                if (targetCategory != null)
                 {
                     categorys.Add(targetCategory);
+                }
+                else
+                {
+                    categorys = new List<Category>() { targetCategory };
                 }
             }
             

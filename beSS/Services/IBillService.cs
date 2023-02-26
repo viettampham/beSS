@@ -9,6 +9,7 @@ namespace beSS.Services
     public interface IBillService
     {
         List<BillResponse> GetAll();
+        BillResponse GetBillById(Guid id);
         List<BillResponse> SearchBillByName(string CustomerName);
         List<BillResponse> GetAllBillNoPayedByUser(Guid id);
         List<BillResponse> GetAllBillPayedByUser(Guid id);

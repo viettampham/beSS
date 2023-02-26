@@ -43,7 +43,8 @@ namespace beSS.Services.Impl
                             QuantityOrder = o.QuantityOrder,
                             TotalMoney = o.TotalMoney,
                             DisplayTotalMoney = o.TotalMoney.ToString("#,## VND"),
-                            IsinBill = o.IsinBill
+                            IsinBill = o.IsinBill,
+                            BillID = o.IDOB
                         }).ToList(),
                     TotalBill = b.TotalBill,
                     DisplayTotalBill = b.TotalBill.ToString("#,## VND"),
@@ -53,6 +54,49 @@ namespace beSS.Services.Impl
                     IsPayed = b.IsPayed
                 }).ToList();
             return listBill;
+        }
+
+        public BillResponse GetBillById(Guid id)
+        {
+            var targetBill = _context.Bills.Include(b => b.Orders)
+                .FirstOrDefault(b=>b.BillID == id && b.IsPayed == false);
+            if (targetBill == null)
+            {
+                throw new Exception("Not found this bill");
+            }
+
+            return new BillResponse()
+            {
+                BillID = targetBill.BillID,
+                UserID = targetBill.UserID,
+                Orders = _context.Orders.Include(o=>o.Product)
+                    .Where(o=>o.IDOB == targetBill.BillID && o.UserID == targetBill.UserID && o.IsinBill == true)
+                    .Select(o=>new OrderResponse()
+                    {
+                        OrderID = o.OrderID,
+                        UserID = o.UserID,
+                        ProductID = o.Product.ProductID,
+                        Name = o.Product.Name,
+                        Description = o.Product.Description,
+                        ImageURL = o.Product.ImageURL,
+                        QuantityAvailable = o.Product.QuantityAvailable,
+                        Price = o.Product.Price,
+                        DisplayPrice = o.Product.Price.ToString("#,## VND"),
+                        Size = o.Product.Size,
+                        Brand = o.Product.Brand,
+                        Categories = o.Product.Categories,
+                        QuantityOrder = o.QuantityOrder,
+                        TotalMoney = o.TotalMoney,
+                        DisplayTotalMoney = o.TotalMoney.ToString("#,## VND"),
+                        IsinBill = o.IsinBill
+                    }).ToList(),
+                TotalBill = targetBill.TotalBill,
+                DisplayTotalBill = targetBill.TotalBill.ToString("#,## VND"),
+                AddressTranfer = targetBill.AddressTranfer,
+                NameCustomer = targetBill.NameCustomer,
+                PhoneNumber = targetBill.PhoneNumber,
+                IsPayed = targetBill.IsPayed
+            };
         }
 
         public List<BillResponse> SearchBillByName(string CustomerName)
@@ -175,12 +219,20 @@ namespace beSS.Services.Impl
         public MessageResponse CreateBill(CreateBillRequest request)
         {
             var listOrderTarget = _context.Orders
+                .Include(x=>x.Product)
                 .Where(o => o.UserID == request.UserID && o.IsinBill == false)
                 .Select(o => o).ToList();
             int totalBill = 0;
             foreach (var order in listOrderTarget)
             {
                 totalBill = totalBill + order.TotalMoney;
+            }
+
+            var listOrder = new List<Guid>();
+            foreach (var order in listOrderTarget)
+            {
+                var OrderID = order.OrderID;
+                listOrder.Add(OrderID);
             }
 
             var newBill = new Bill()
@@ -192,7 +244,8 @@ namespace beSS.Services.Impl
                 AddressTranfer = request.AddressTranfer,
                 NameCustomer = request.NameCustomer,
                 PhoneNumber = request.PhoneNumber,
-                IsPayed = false
+                IsPayed = false,
+                OrderIDs = listOrder,
             };
             
             _context.Add(newBill);
@@ -223,24 +276,52 @@ namespace beSS.Services.Impl
 
         public MessageResponse ConFirmBill(Guid id)
         {
-            var targetBill = _context.Bills
-                .FirstOrDefault(b => b.BillID == id);
+            var targetBill = _context.Bills.FirstOrDefault(x => x.BillID == id && x.IsPayed == false);
             if (targetBill == null)
             {
                 return new MessageResponse()
                 {
-                    Status = 404,
-                    Message = "Not found this bill"
+                    Status = 400,
+                    Message = "Không tìm thấy hóa đơn này"
                 };
             }
 
             targetBill.IsPayed = true;
+            
+            foreach (var orderID in targetBill.OrderIDs)
+            {
+                var targetOrder = _context.Orders
+                    .Include(x=>x.Product)
+                    .FirstOrDefault(x => x.OrderID == orderID);
+                if (targetOrder == null)
+                {
+                    return new MessageResponse()
+                    {
+                        Status = 400,
+                        Message = "Không tìm thấy order này"
+                    };
+                }
+
+                var targetProduct = _context.Products.FirstOrDefault(x => x.ProductID == targetOrder.Product.ProductID);
+                if (targetProduct == null)
+                {
+                    return new MessageResponse()
+                    {
+                        Status = 400,
+                        Message = "Không tìm thấy sản phẩm này"
+                    };
+                }
+
+                targetProduct.QuantityAvailable = targetProduct.QuantityAvailable - targetOrder.QuantityOrder;
+            }
+
             _context.SaveChanges();
             return new MessageResponse()
             {
                 Status = 200,
                 Message = "Success"
             };
+
         }
     }
 }
